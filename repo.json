@@ -1,0 +1,20 @@
+[
+  {
+    "Author": "gaypotatoemma",
+    "Name": "Quest Banners",
+    "Description": "Adds several styles of Quest Banners to replace the Vanilla Styles, inspired by various other games.",
+    "InternalName": "QuestBanners",
+    "AssemblyVersion": "0.0.0.1",
+    "TestingAssemblyVersion": null,
+    "RepoUrl": "https://github.com/GayPotatoEmma/botw-quest-banner",
+    "ApplicableVersion": "any",
+    "DalamudApiLevel": 15,
+    "Punchline": "Custom Quest Banners",
+    "Tags": ["botw", "totk", "zelda", "ui", "quest"],
+    "IsHide": false,
+    "IsTestingExclusive": false,
+    "DownloadLinkInstall": "https://github.com/GayPotatoEmma/botw-quest-banner/releases/latest/download/latest.zip",
+    "DownloadLinkUpdate": "https://github.com/GayPotatoEmma/botw-quest-banner/releases/latest/download/latest.zip",
+    "DownloadLinkTesting": null
+  }
+]
