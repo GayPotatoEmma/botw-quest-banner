@@ -80,9 +80,9 @@ public sealed class QuestBannerOverlay : Window, IDisposable
         RespectCloseHotkey = false;
 
         var dir = Plugin.PluginInterface.AssemblyLocation.Directory!.FullName;
-        var fontPath = Path.Combine(dir, "HyliaSerifBeta-Regular.otf");
-        _acceptedSoundPath = Path.Combine(dir, "assets", "questbanner.mp3");
-        _completeSoundPath = Path.Combine(dir, "assets", "questcomplete.mp3");
+        var fontPath = Path.Combine(dir, "assets", "fonts", "HyliaSerifBeta-Regular.otf");
+        _acceptedSoundPath = Path.Combine(dir, "assets", "audio", "questbanner.mp3");
+        _completeSoundPath = Path.Combine(dir, "assets", "audio", "questcomplete.mp3");
 
         var atlas = Plugin.PluginInterface.UiBuilder.FontAtlas;
 

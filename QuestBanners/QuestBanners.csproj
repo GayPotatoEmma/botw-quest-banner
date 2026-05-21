@@ -10,7 +10,7 @@
     <Name>Quest Banners</Name>
     <RepoUrl>https://github.com/GayPotatoEmma/botw-quest-banner</RepoUrl>
     <InternalName>QuestBanners</InternalName>
-    <AssemblyVersion>0.0.0.1</AssemblyVersion>
+    <AssemblyVersion>0.0.0.2</AssemblyVersion>
     <Punchline>Custom Quest Banners</Punchline>
     <Description>Adds several styles of Quest Banners to replace the Vanilla Styles, inspired by various other games.</Description>
     <Tags>botw, totk, zelda, ui, quest,</Tags>
