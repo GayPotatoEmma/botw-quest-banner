@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*.*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.x'
+
+      - name: Build
+        run: dotnet build QuestBanners/QuestBanners.csproj --configuration Release
+
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v5
+        with:
+          name: QuestBanners
+          path: QuestBanners/bin/Release/QuestBanners/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: QuestBanners/bin/Release/QuestBanners/*
+          generate_release_notes: true
