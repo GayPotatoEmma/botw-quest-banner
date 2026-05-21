@@ -7,7 +7,7 @@ using Dalamud.Interface.ManagedFontAtlas;
 using Dalamud.Interface.Textures;
 using Dalamud.Interface.Windowing;
 
-namespace FantasyOfTheWild.Windows;
+namespace QuestBanners.Windows;
 
 public sealed class QuestBannerOverlay : Window, IDisposable
 {

@@ -1,7 +1,7 @@
 using Dalamud.Configuration;
 using System;
 
-namespace FantasyOfTheWild;
+namespace QuestBanners;
 
 public enum BannerTheme { BotW, TotK }
 

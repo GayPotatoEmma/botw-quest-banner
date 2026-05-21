@@ -4,7 +4,7 @@ using Lumina.Excel.Sheets;
 using System;
 using System.Text.RegularExpressions;
 
-namespace FantasyOfTheWild;
+namespace QuestBanners;
 
 public enum BannerType { Accepted, Complete }
 

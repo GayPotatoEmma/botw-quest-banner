@@ -3,13 +3,13 @@ using System.Numerics;
 using Dalamud.Bindings.ImGui;
 using Dalamud.Interface.Windowing;
 
-namespace FantasyOfTheWild.Windows;
+namespace QuestBanners.Windows;
 
 public class ConfigWindow : Window, IDisposable
 {
     private readonly Configuration configuration;
 
-    public ConfigWindow(Plugin plugin) : base("Fantasy of the Wild###FantasyOfTheWildConfig")
+    public ConfigWindow(Plugin plugin) : base("Quest Banners###QuestBannersConfig")
     {
         Flags = ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoScrollbar |
                 ImGuiWindowFlags.NoScrollWithMouse;

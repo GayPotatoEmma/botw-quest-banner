@@ -3,7 +3,7 @@ using Dalamud.Hooking;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 
-namespace FantasyOfTheWild;
+namespace QuestBanners;
 
 public sealed unsafe class BannerSuppressService : IDisposable
 {

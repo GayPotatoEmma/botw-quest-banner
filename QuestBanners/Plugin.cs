@@ -3,9 +3,9 @@ using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin.Services;
-using FantasyOfTheWild.Windows;
+using QuestBanners.Windows;
 
-namespace FantasyOfTheWild;
+namespace QuestBanners;
 
 public sealed class Plugin : IDalamudPlugin
 {
@@ -25,7 +25,7 @@ public sealed class Plugin : IDalamudPlugin
     public Configuration Configuration { get; init; }
     internal static Configuration Config { get; private set; } = null!;
 
-    public readonly WindowSystem WindowSystem = new("FantasyOfTheWild");
+    public readonly WindowSystem WindowSystem = new("QuestBanners");
     private ConfigWindow ConfigWindow { get; init; }
     private QuestBannerOverlay BannerOverlay { get; init; }
     private QuestBannerService BannerService { get; init; }
@@ -48,7 +48,7 @@ public sealed class Plugin : IDalamudPlugin
 
         CommandManager.AddHandler(CommandName, new CommandInfo(OnCommand)
         {
-            HelpMessage = "Open the Fantasy of the Wild settings window."
+            HelpMessage = "Open the QuestBanners settings window."
         });
 
         CommandManager.AddHandler(BannerTestCommand, new CommandInfo(OnBannerTestCommand)
