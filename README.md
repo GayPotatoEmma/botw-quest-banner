@@ -6,7 +6,9 @@
 - Tears of the Kingdom
 
 ## Preview
-https://github.com/user-attachments/assets/f939e78b-a10f-405b-96d3-cec7539f98e5
+https://github.com/user-attachments/assets/743c9b2b-2a2f-44bf-adbd-4ecb475fdf2d
+
+https://github.com/user-attachments/assets/90231398-ce5b-4fe7-a3e3-141d637ab74e
 
 ## How to Install
 - Go into your Dalamud settings
