@@ -16,3 +16,6 @@ https://github.com/user-attachments/assets/90231398-ce5b-4fe7-a3e3-141d637ab74e
 - Add the following repo:
   - `https://raw.githubusercontent.com/GayPotatoEmma/botw-quest-banner/refs/heads/master/repo.json`
 - Refresh the installer
+
+## Credits
+- Font: [Hylia Serif](https://artsyomni.com/hyliaserif) by ArtsyOmni
