@@ -20,8 +20,7 @@ public sealed class Plugin : IDalamudPlugin
     [PluginService] internal static IGameInteropProvider GameInterop { get; private set; } = null!;
     [PluginService] internal static IDutyState DutyState { get; private set; } = null!;
 
-    private const string CommandName = "/fotw";
-    private const string BannerTestCommand = "/questbanner";
+    private const string CommandName = "/qb";
 
     public Configuration Configuration { get; init; }
     internal static Configuration Config { get; private set; } = null!;
@@ -56,12 +55,7 @@ public sealed class Plugin : IDalamudPlugin
 
         CommandManager.AddHandler(CommandName, new CommandInfo(OnCommand)
         {
-            HelpMessage = "Open the QuestBanners settings window."
-        });
-
-        CommandManager.AddHandler(BannerTestCommand, new CommandInfo(OnBannerTestCommand)
-        {
-            HelpMessage = "Test the BotW quest banner. Usage: /questbanner [accepted|complete] [quest name]"
+            HelpMessage = "Open the Quest Banners settings window."
         });
 
         PluginInterface.UiBuilder.Draw += WindowSystem.Draw;
@@ -85,7 +79,6 @@ public sealed class Plugin : IDalamudPlugin
         ConfigWindow.Dispose();
 
         CommandManager.RemoveHandler(CommandName);
-        CommandManager.RemoveHandler(BannerTestCommand);
     }
 
     private void OnCommand(string command, string args)
@@ -93,15 +86,5 @@ public sealed class Plugin : IDalamudPlugin
         ConfigWindow.Toggle();
     }
 
-    private void OnBannerTestCommand(string command, string args)
-    {
-        var parts = args.Split(' ', 2, System.StringSplitOptions.RemoveEmptyEntries);
-        var type  = (parts.Length > 0 && parts[0].Equals("complete", System.StringComparison.OrdinalIgnoreCase))
-                    ? BannerType.Complete
-                    : BannerType.Accepted;
-        var name  = parts.Length > 1 ? parts[1] : "Test of Will";
-        BannerOverlay.ShowBanner(name, type);
-    }
-    
     public void ToggleConfigUi() => ConfigWindow.Toggle();
 }

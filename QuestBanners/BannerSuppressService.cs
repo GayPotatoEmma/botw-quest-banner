@@ -7,7 +7,9 @@ namespace QuestBanners;
 
 public sealed unsafe class BannerSuppressService : IDisposable
 {
-    private static readonly int[] SuppressedIds = [120001, 120002, 120021, 120031, 120032, 121081, 121082];
+    private static readonly int[] QuestBannerIds = [120001, 120002, 120031, 120032, 121081, 121082];
+
+    private static readonly int[] DutyBannerIds = [120021];
 
     private delegate void ImageSetImageTextureDelegate(AtkUnitBase* addon, int bannerId, int a3, int sfxId);
 
@@ -30,7 +32,11 @@ public sealed unsafe class BannerSuppressService : IDisposable
 
     private void OnSetImageTexture(AtkUnitBase* addon, int bannerId, int a3, int sfxId)
     {
-        if (Array.IndexOf(SuppressedIds, bannerId) >= 0)
+        bool suppress =
+            (Plugin.Config.QuestBannersEnabled && Array.IndexOf(QuestBannerIds, bannerId) >= 0) ||
+            (Plugin.Config.DutyBannersEnabled  && Array.IndexOf(DutyBannerIds,  bannerId) >= 0);
+
+        if (suppress)
         {
             _hook!.Original(addon, 0, a3, 0);
             return;

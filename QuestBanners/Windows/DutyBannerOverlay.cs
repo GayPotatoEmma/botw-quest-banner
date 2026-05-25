@@ -175,7 +175,7 @@ public sealed class DutyBannerOverlay : Window, IDisposable
             ? ImGui.CalcTextSizeA(subtitleFontPtr, subtitleSz, float.MaxValue, 0f, _subtitleText, out _)
             : ImGui.CalcTextSize(_subtitleText);
 
-        bool isTotK = Plugin.Config.Theme == BannerTheme.TotK;
+        bool isTotK = Plugin.Config.DutyBannerTheme == BannerTheme.TotK;
 
         Vector4 colTitle     = isTotK ? TotK_ColTitle     : BotW_ColTitle;
         Vector4 colSubtitle  = isTotK ? TotK_ColSubtitle  : BotW_ColSubtitle;

@@ -35,6 +35,7 @@ public sealed class DutyBannerService : IDisposable
 
     private void OnDutyStarted(IDutyStateEventArgs args)
     {
+        if (!Plugin.Config.DutyBannersEnabled) return;
         try
         {
             var cfc = _dutyState.ContentFinderCondition;

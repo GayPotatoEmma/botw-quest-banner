@@ -47,7 +47,7 @@ public sealed class QuestBannerOverlay : Window, IDisposable
         Complete:     new(0.98f, 0.96f, 0.78f, 1.00f),
         CategoryText: new(0.08f, 0.06f, 0.02f, 1.00f));
 
-    private static ThemeData ActiveTheme => Plugin.Config.Theme == BannerTheme.TotK ? ThemeTotK : ThemeBotW;
+    private static ThemeData ActiveTheme => Plugin.Config.QuestBannerTheme == BannerTheme.TotK ? ThemeTotK : ThemeBotW;
 
     private readonly IFontHandle _titleFont;
     private readonly IFontHandle _completeFont;
@@ -250,7 +250,7 @@ public sealed class QuestBannerOverlay : Window, IDisposable
 
         dl.PushClipRect(new Vector2(clipLeft, p0.Y), p1, true);
 
-        bool isTotK = Plugin.Config.Theme == BannerTheme.TotK;
+        bool isTotK = Plugin.Config.QuestBannerTheme == BannerTheme.TotK;
 
         if (!isTotK)
         {
@@ -383,7 +383,6 @@ public sealed class QuestBannerOverlay : Window, IDisposable
         float cX, cY;
         if (isTotK && titleWidth > 0f)
         {
-            // Overlap the bottom-right of the quest title, like in TotK
             cX = titleX + titleWidth - cSize.X * 0.15f;
             cY = titleY + TitleFontSz - cSize.Y * 0.85f;
         }

@@ -31,6 +31,7 @@ public sealed class QuestBannerService : IDisposable
 
     private void OnChatMessage(IHandleableChatMessage message)
     {
+        if (!Plugin.Config.QuestBannersEnabled) return;
         if (message.LogKind != XivChatType.SystemMessage) return;
 
         var text = message.Message.TextValue;
