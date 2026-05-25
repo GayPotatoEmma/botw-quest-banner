@@ -1,10 +1,28 @@
 # Quest Banners
-> Adds several styles of Quest Banners to replace the Vanilla Styles, inspired by various other games.
+> Adds several bits of UI inspired by recent Zelda games.
 
 ## Current available styles
 - Breath of the Wild
 - Tears of the Kingdom
 
+## Current available features
+- Quest Banners
+  - Works for accepting and completing quests
+- Duty Banners
+  - Supports various duty types
+    - Dungeons
+    - Guildhests
+    - Trials
+    - Raids
+    - PvP
+    - Treasure Hunt
+    - Deep Dungeons
+    - The Masked Carnivale
+    - Ultimate Raids
+    - Variant and Criterion Dungeons
+    - Ocean Fishing
+    - Chaotic Alliance Raids
+    
 ## Preview
 https://github.com/user-attachments/assets/743c9b2b-2a2f-44bf-adbd-4ecb475fdf2d
 
