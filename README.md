@@ -24,9 +24,13 @@
     - Chaotic Alliance Raids
     
 ## Preview
+**Quest Accepted:**
+
 https://github.com/user-attachments/assets/743c9b2b-2a2f-44bf-adbd-4ecb475fdf2d
 
-https://github.com/user-attachments/assets/90231398-ce5b-4fe7-a3e3-141d637ab74e
+**Dungeon Started:**
+
+https://github.com/user-attachments/assets/31d5e9a4-312d-4d13-b7e2-f4da0a0e2509
 
 ## How to Install
 - Go into your Dalamud settings
