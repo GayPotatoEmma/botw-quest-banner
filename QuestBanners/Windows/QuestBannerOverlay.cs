@@ -89,13 +89,13 @@ public sealed class QuestBannerOverlay : Window, IDisposable
         _titleFont = atlas.NewDelegateFontHandle(e => e.OnPreBuild(tk =>
         {
             var cfg = new SafeFontConfig { SizePx = TitleFontSz, OversampleH = 3, OversampleV = 3 };
-            tk.AddFontFromFile(fontPath, ref cfg);
+            tk.AddFontFromFile(fontPath, in cfg);
         }));
 
         _completeFont = atlas.NewDelegateFontHandle(e => e.OnPreBuild(tk =>
         {
             var cfg = new SafeFontConfig { SizePx = CompleteFontSz, OversampleH = 3, OversampleV = 3 };
-            tk.AddFontFromFile(fontPath, ref cfg);
+            tk.AddFontFromFile(fontPath, in cfg);
         }));
 
         var italicFontPath   = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "segoeuii.ttf");
@@ -103,12 +103,12 @@ public sealed class QuestBannerOverlay : Window, IDisposable
         _categoryFont = atlas.NewDelegateFontHandle(e => e.OnPreBuild(tk =>
         {
             var cfg = new SafeFontConfig { SizePx = CategoryFontSz, OversampleH = 3, OversampleV = 3 };
-            tk.AddFontFromFile(italicFontPath, ref cfg);
+            tk.AddFontFromFile(italicFontPath, in cfg);
         }));
         _categoryFontRegular = atlas.NewDelegateFontHandle(e => e.OnPreBuild(tk =>
         {
             var cfg = new SafeFontConfig { SizePx = CategoryFontSz, OversampleH = 3, OversampleV = 3 };
-            tk.AddFontFromFile(regularFontPath, ref cfg);
+            tk.AddFontFromFile(regularFontPath, in cfg);
         }));
     }
 

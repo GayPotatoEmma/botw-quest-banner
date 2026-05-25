@@ -7,7 +7,7 @@ namespace QuestBanners;
 
 public sealed unsafe class BannerSuppressService : IDisposable
 {
-    private static readonly int[] SuppressedIds = [120001, 120002, 120031, 120032, 121081, 121082];
+    private static readonly int[] SuppressedIds = [120001, 120002, 120021, 120031, 120032, 121081, 121082];
 
     private delegate void ImageSetImageTextureDelegate(AtkUnitBase* addon, int bannerId, int a3, int sfxId);
 

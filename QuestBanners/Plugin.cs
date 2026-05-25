@@ -18,6 +18,7 @@ public sealed class Plugin : IDalamudPlugin
     [PluginService] internal static IPluginLog Log { get; private set; } = null!;
     [PluginService] internal static IChatGui ChatGui { get; private set; } = null!;
     [PluginService] internal static IGameInteropProvider GameInterop { get; private set; } = null!;
+    [PluginService] internal static IDutyState DutyState { get; private set; } = null!;
 
     private const string CommandName = "/fotw";
     private const string BannerTestCommand = "/questbanner";
@@ -30,6 +31,8 @@ public sealed class Plugin : IDalamudPlugin
     private QuestBannerOverlay BannerOverlay { get; init; }
     private QuestBannerService BannerService { get; init; }
     private BannerSuppressService BannerSuppress { get; init; }
+    private DutyBannerOverlay DutyBannerOverlay { get; init; }
+    private DutyBannerService DutyBannerService { get; init; }
 
     public Plugin()
     {
@@ -45,6 +48,11 @@ public sealed class Plugin : IDalamudPlugin
         BannerService = new QuestBannerService();
         BannerService.BannerRequested += (name, type, category, iconId) => BannerOverlay.ShowBanner(name, type, category, iconId);
         BannerSuppress = new BannerSuppressService(GameInterop);
+
+        DutyBannerOverlay = new DutyBannerOverlay();
+        WindowSystem.AddWindow(DutyBannerOverlay);
+        DutyBannerService = new DutyBannerService(DutyState);
+        DutyBannerService.DutyBannerRequested += (title, dutyName) => DutyBannerOverlay.ShowBanner(title, dutyName);
 
         CommandManager.AddHandler(CommandName, new CommandInfo(OnCommand)
         {
@@ -72,6 +80,8 @@ public sealed class Plugin : IDalamudPlugin
         BannerSuppress.Dispose();
         BannerService.Dispose();
         BannerOverlay.Dispose();
+        DutyBannerService.Dispose();
+        DutyBannerOverlay.Dispose();
         ConfigWindow.Dispose();
 
         CommandManager.RemoveHandler(CommandName);
