@@ -91,7 +91,7 @@ public sealed class DutyBannerOverlay : Window, IDisposable
             _waveOut?.Dispose();
             _audioReader?.Dispose();
 
-            _audioReader = new AudioFileReader(_soundPath);
+            _audioReader = new AudioFileReader(_soundPath) { Volume = Plugin.GetGameSfxVolume() * 1.5f };
             _waveOut     = new WaveOutEvent();
             _waveOut.Init(_audioReader);
             _waveOut.Play();

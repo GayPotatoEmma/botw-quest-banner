@@ -132,7 +132,7 @@ public sealed class QuestBannerOverlay : Window, IDisposable
             _waveOut?.Dispose();
             _audioReader?.Dispose();
 
-            _audioReader = new AudioFileReader(path);
+            _audioReader = new AudioFileReader(path) { Volume = Plugin.GetGameSfxVolume() * 1.5f };
             _waveOut     = new WaveOutEvent();
             _waveOut.Init(_audioReader);
             _waveOut.Play();

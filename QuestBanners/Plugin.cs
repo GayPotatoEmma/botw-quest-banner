@@ -19,6 +19,18 @@ public sealed class Plugin : IDalamudPlugin
     [PluginService] internal static IChatGui ChatGui { get; private set; } = null!;
     [PluginService] internal static IGameInteropProvider GameInterop { get; private set; } = null!;
     [PluginService] internal static IDutyState DutyState { get; private set; } = null!;
+    [PluginService] internal static IGameConfig GameConfig { get; private set; } = null!;
+
+    internal static float GetGameSfxVolume()
+    {
+        GameConfig.System.TryGet("IsSndMaster", out bool muteMaster);
+        GameConfig.System.TryGet("IsSndSe",     out bool muteSe);
+        if (muteMaster || muteSe) return 0f;
+
+        GameConfig.System.TryGet("SoundMaster", out uint master);
+        GameConfig.System.TryGet("SoundSe",     out uint se);
+        return master / 100f * (se / 100f);
+    }
 
     private const string CommandName = "/qb";
 
