@@ -87,9 +87,7 @@ public sealed class DutyBannerOverlay : Window, IDisposable
     {
         try
         {
-            _waveOut?.Stop();
-            _waveOut?.Dispose();
-            _audioReader?.Dispose();
+            StopAndDisposeAudio();
 
             _audioReader = new AudioFileReader(_soundPath) { Volume = Plugin.GetGameSfxVolume() * 1.5f };
             _waveOut     = new WaveOutEvent();
@@ -106,9 +104,21 @@ public sealed class DutyBannerOverlay : Window, IDisposable
     {
         _titleFont.Dispose();
         _subtitleFont.Dispose();
-        _waveOut?.Stop();
-        _waveOut?.Dispose();
-        _audioReader?.Dispose();
+        StopAndDisposeAudio();
+    }
+
+    private void StopAndDisposeAudio()
+    {
+        var waveOut     = _waveOut;
+        var audioReader = _audioReader;
+        _waveOut     = null;
+        _audioReader = null;
+        System.Threading.ThreadPool.QueueUserWorkItem(_ =>
+        {
+            try { waveOut?.Stop(); }        catch { }
+            try { waveOut?.Dispose(); }     catch { }
+            try { audioReader?.Dispose(); } catch { }
+        });
     }
 
     public override void PreDraw()
