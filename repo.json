@@ -4,7 +4,7 @@
     "Name": "Quest Banners",
     "Description": "Adds several bits of UI inspired by recent Zelda games. Currently supports Quest Banners and Duty Banners.",
     "InternalName": "QuestBanners",
-    "AssemblyVersion": "0.0.0.4",
+    "AssemblyVersion": "0.0.0.5",
     "TestingAssemblyVersion": null,
     "RepoUrl": "https://github.com/GayPotatoEmma/botw-quest-banner",
     "ApplicableVersion": "any",
