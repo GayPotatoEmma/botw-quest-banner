@@ -3,6 +3,8 @@ using System.IO;
 using System.Numerics;
 using NAudio.Wave;
 using Dalamud.Bindings.ImGui;
+using Dalamud.Game;
+using Dalamud.Interface.GameFonts;
 using Dalamud.Interface.ManagedFontAtlas;
 using Dalamud.Interface.Textures;
 using Dalamud.Interface.Windowing;
@@ -50,9 +52,10 @@ public sealed class QuestBannerOverlay : Window, IDisposable
     private static ThemeData ActiveTheme => Plugin.Config.QuestBannerTheme == BannerTheme.TotK ? ThemeTotK : ThemeBotW;
 
     private readonly IFontHandle _titleFont;
+    private readonly IFontHandle _titleFontJp;
     private readonly IFontHandle _completeFont;
+    private readonly IFontHandle _completeFontJp;
     private readonly IFontHandle _categoryFont;
-    private readonly IFontHandle _categoryFontRegular;
 
     private readonly string _acceptedSoundPath;
     private readonly string _completeSoundPath;
@@ -81,6 +84,7 @@ public sealed class QuestBannerOverlay : Window, IDisposable
 
         var dir = Plugin.PluginInterface.AssemblyLocation.Directory!.FullName;
         var fontPath = Path.Combine(dir, "assets", "fonts", "HyliaSerifBeta-Regular.otf");
+        var delaGothicPath = Path.Combine(dir, "assets", "fonts", "DelaGothicOne-Regular.ttf");
         _acceptedSoundPath = Path.Combine(dir, "assets", "audio", "questbanner.mp3");
         _completeSoundPath = Path.Combine(dir, "assets", "audio", "questcomplete.mp3");
 
@@ -92,24 +96,31 @@ public sealed class QuestBannerOverlay : Window, IDisposable
             tk.AddFontFromFile(fontPath, in cfg);
         }));
 
+        _titleFontJp = atlas.NewDelegateFontHandle(e => e.OnPreBuild(tk =>
+        {
+            var cfg = new SafeFontConfig { SizePx = TitleFontSz, OversampleH = 3, OversampleV = 3 };
+            tk.AddFontFromFile(delaGothicPath, in cfg);
+        }));
+
         _completeFont = atlas.NewDelegateFontHandle(e => e.OnPreBuild(tk =>
         {
             var cfg = new SafeFontConfig { SizePx = CompleteFontSz, OversampleH = 3, OversampleV = 3 };
             tk.AddFontFromFile(fontPath, in cfg);
         }));
 
-        var italicFontPath   = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "segoeuii.ttf");
-        var regularFontPath  = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "segoeui.ttf");
-        _categoryFont = atlas.NewDelegateFontHandle(e => e.OnPreBuild(tk =>
-        {
-            var cfg = new SafeFontConfig { SizePx = CategoryFontSz, OversampleH = 3, OversampleV = 3 };
-            tk.AddFontFromFile(italicFontPath, in cfg);
-        }));
-        _categoryFontRegular = atlas.NewDelegateFontHandle(e => e.OnPreBuild(tk =>
-        {
-            var cfg = new SafeFontConfig { SizePx = CategoryFontSz, OversampleH = 3, OversampleV = 3 };
-            tk.AddFontFromFile(regularFontPath, in cfg);
-        }));
+        _completeFontJp = atlas.NewDelegateFontHandle(e => e.OnPreBuild(tk =>
+      {
+            var cfg = new SafeFontConfig { SizePx = CompleteFontSz, OversampleH = 3, OversampleV = 3 };
+tk.AddFontFromFile(delaGothicPath, in cfg);
+ }));
+
+            var segoeUiPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "segoeui.ttf");
+              _categoryFont = atlas.NewDelegateFontHandle(e => e.OnPreBuild(tk =>
+         {
+                var cfg = new SafeFontConfig { SizePx = CategoryFontSz, OversampleH = 3, OversampleV = 3 };
+        tk.AddFontFromFile(segoeUiPath, in cfg);
+                  tk.AddDalamudDefaultFont(CategoryFontSz);
+          }));
     }
 
     public void ShowBanner(string questName, BannerType type, string? category = null, uint categoryIconId = 0)
@@ -144,9 +155,10 @@ public sealed class QuestBannerOverlay : Window, IDisposable
     public void Dispose()
     {
         _titleFont.Dispose();
+        _titleFontJp.Dispose();
         _completeFont.Dispose();
+        _completeFontJp.Dispose();
         _categoryFont.Dispose();
-        _categoryFontRegular.Dispose();
         StopAndDisposeAudio();
     }
 
@@ -291,12 +303,10 @@ public sealed class QuestBannerOverlay : Window, IDisposable
         const float totalH   = iconSz;
         const float aboveGap = 6f;
 
-        IFontHandle activeCategoryFont = isTotK ? _categoryFontRegular : _categoryFont;
-
         ImFontPtr fontPtr = default;
-        bool fontReady = activeCategoryFont.Available;
+        bool fontReady = _categoryFont.Available;
         if (fontReady)
-            using (activeCategoryFont.Push())
+            using (_categoryFont.Push())
                 fontPtr = ImGui.GetFont();
 
         Vector2 textSize = fontReady
@@ -354,10 +364,15 @@ public sealed class QuestBannerOverlay : Window, IDisposable
 
     private (float titleX, float titleY, float titleWidth) DrawTitleText(ImDrawListPtr dl, Vector2 p0, Vector2 p1, float sw, float alpha, ThemeData theme, bool isTotK = false)
     {
-        if (!_titleFont.Available) return (0f, 0f, 0f);
+        var clientLanguage = Plugin.ClientState.ClientLanguage;
+        bool isJapanese = clientLanguage == ClientLanguage.Japanese;
+
+        IFontHandle titleFontHandle = isJapanese ? _titleFontJp : _titleFont;
+
+        if (!titleFontHandle.Available) return (0f, 0f, 0f);
 
         ImFontPtr titleFontPtr;
-        using (_titleFont.Push())
+        using (titleFontHandle.Push())
             titleFontPtr = ImGui.GetFont();
 
         int remaining = 0;
@@ -380,10 +395,15 @@ public sealed class QuestBannerOverlay : Window, IDisposable
 
     private void DrawCompleteText(ImDrawListPtr dl, Vector2 p0, Vector2 p1, float sw, float alpha, ThemeData theme, bool isTotK, float titleX, float titleY, float titleWidth)
     {
-        if (!_completeFont.Available) return;
+        var clientLanguage = Plugin.ClientState.ClientLanguage;
+        bool isJapanese = clientLanguage == ClientLanguage.Japanese;
+
+        IFontHandle completeFontHandle = isJapanese ? _completeFontJp : _completeFont;
+
+        if (!completeFontHandle.Available) return;
 
         ImFontPtr completeFontPtr;
-        using (_completeFont.Push())
+        using (completeFontHandle.Push())
             completeFontPtr = ImGui.GetFont();
 
         const string completeText = "Complete";

@@ -3,6 +3,8 @@ using System.IO;
 using System.Numerics;
 using NAudio.Wave;
 using Dalamud.Bindings.ImGui;
+using Dalamud.Game;
+using Dalamud.Interface.GameFonts;
 using Dalamud.Interface.ManagedFontAtlas;
 using Dalamud.Interface.Windowing;
 
@@ -17,7 +19,7 @@ public sealed class DutyBannerOverlay : Window, IDisposable
 
     private const float ScaleStart = 0.95f;
 
-    private const float TitleFontSz    = 68f;
+    private const float TitleFontSz    = 90f;
     private const float SubtitleFontSz = 34f;
 
     private string _titleText    = "A Major Test of Strength";
@@ -29,6 +31,7 @@ public sealed class DutyBannerOverlay : Window, IDisposable
     private AudioFileReader?     _audioReader;
 
     private readonly IFontHandle _titleFont;
+    private readonly IFontHandle _titleFontJp;
     private readonly IFontHandle _subtitleFont;
 
     private static readonly Vector4 BotW_ColTitle     = new(1.00f, 1.00f, 1.00f, 1.00f);
@@ -54,24 +57,32 @@ public sealed class DutyBannerOverlay : Window, IDisposable
         IsOpen = true;
         RespectCloseHotkey = false;
 
-        var dir      = Plugin.PluginInterface.AssemblyLocation.Directory!.FullName;
-        var hyliaPath  = Path.Combine(dir, "assets", "fonts", "HyliaSerifBeta-Regular.otf");
-        var regularPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "segoeui.ttf");
-        _soundPath = Path.Combine(dir, "assets", "audio", "shrinestart2.mp3");
+               var dir      = Plugin.PluginInterface.AssemblyLocation.Directory!.FullName;
+             var hyliaPath  = Path.Combine(dir, "assets", "fonts", "HyliaSerifBeta-Regular.otf");
+               var delaGothicPath = Path.Combine(dir, "assets", "fonts", "DelaGothicOne-Regular.ttf");
+          _soundPath = Path.Combine(dir, "assets", "audio", "shrinestart2.mp3");
 
-        var atlas = Plugin.PluginInterface.UiBuilder.FontAtlas;
+               var atlas = Plugin.PluginInterface.UiBuilder.FontAtlas;
 
-        _titleFont = atlas.NewDelegateFontHandle(e => e.OnPreBuild(tk =>
-        {
-            var cfg = new SafeFontConfig { SizePx = TitleFontSz, OversampleH = 3, OversampleV = 3 };
-            tk.AddFontFromFile(hyliaPath, in cfg);
-        }));
+         _titleFont = atlas.NewDelegateFontHandle(e => e.OnPreBuild(tk =>
+               {
+                   var cfg = new SafeFontConfig { SizePx = TitleFontSz, OversampleH = 3, OversampleV = 3 };
+                   tk.AddFontFromFile(hyliaPath, in cfg);
+               }));
 
-        _subtitleFont = atlas.NewDelegateFontHandle(e => e.OnPreBuild(tk =>
-        {
-            var cfg = new SafeFontConfig { SizePx = SubtitleFontSz, OversampleH = 3, OversampleV = 3 };
-            tk.AddFontFromFile(regularPath, in cfg);
-        }));
+               _titleFontJp = atlas.NewDelegateFontHandle(e => e.OnPreBuild(tk =>
+            {
+             var cfg = new SafeFontConfig { SizePx = TitleFontSz, OversampleH = 3, OversampleV = 3 };
+                   tk.AddFontFromFile(delaGothicPath, in cfg);
+           }));
+
+               var segoeUiPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "segoeui.ttf");
+                      _subtitleFont = atlas.NewDelegateFontHandle(e => e.OnPreBuild(tk =>
+                      {
+                        var cfg = new SafeFontConfig { SizePx = SubtitleFontSz, OversampleH = 3, OversampleV = 3 };
+                tk.AddFontFromFile(segoeUiPath, in cfg);
+                       tk.AddDalamudDefaultFont(SubtitleFontSz);
+                  }));
     }
 
     public void ShowBanner(string bannerTitle, string dutyName)
@@ -103,6 +114,7 @@ public sealed class DutyBannerOverlay : Window, IDisposable
     public void Dispose()
     {
         _titleFont.Dispose();
+        _titleFontJp.Dispose();
         _subtitleFont.Dispose();
         StopAndDisposeAudio();
     }
@@ -163,14 +175,19 @@ public sealed class DutyBannerOverlay : Window, IDisposable
         float titleSz    = TitleFontSz    * scale;
         float subtitleSz = SubtitleFontSz * scale;
 
+        var clientLanguage = Plugin.ClientState.ClientLanguage;
+        bool isJapanese = clientLanguage == ClientLanguage.Japanese;
+
         ImFontPtr titleFontPtr    = default;
         ImFontPtr subtitleFontPtr = default;
 
-        bool titleReady    = _titleFont.Available;
+        IFontHandle titleFontHandle    = isJapanese ? _titleFontJp    : _titleFont;
+
+        bool titleReady    = titleFontHandle.Available;
         bool subtitleReady = _subtitleFont.Available;
 
         if (titleReady)
-            using (_titleFont.Push())
+            using (titleFontHandle.Push())
                 titleFontPtr = ImGui.GetFont();
 
         if (subtitleReady)

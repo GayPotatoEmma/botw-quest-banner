@@ -10,7 +10,7 @@
     <Name>Quest Banners</Name>
     <RepoUrl>https://github.com/GayPotatoEmma/botw-quest-banner</RepoUrl>
     <InternalName>QuestBanners</InternalName>
-    <AssemblyVersion>0.0.0.6</AssemblyVersion>
+    <AssemblyVersion>0.0.0.7</AssemblyVersion>
     <Punchline>Custom Quest Banners</Punchline>
     <Description>Adds several bits of UI inspired by recent Zelda games. Currently supports Quest Banners and Duty Banners.</Description>
     <Tags>botw, totk, zelda, ui, quest,</Tags>
@@ -18,6 +18,10 @@
 
   <ItemGroup>
     <Content Include="assets\fonts\HyliaSerifBeta-Regular.otf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>false</Visible>
+    </Content>
+    <Content Include="assets\fonts\DelaGothicOne-Regular.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>false</Visible>
     </Content>
