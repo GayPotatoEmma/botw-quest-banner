@@ -59,6 +59,13 @@ public sealed class DutyBannerService : IDisposable
             [ClientLanguage.French] = "La descente infinie",
             [ClientLanguage.Japanese] = "「終わりなき降下」",
         },
+        [26] = new()
+        {
+            [ClientLanguage.English] = "The Elemental Wilderness",
+            [ClientLanguage.German] = "Die elementare Wildnis",
+            [ClientLanguage.French] = "La contrée élémentaire",
+            [ClientLanguage.Japanese] = "「属性の荒野」",
+        },
         [27] = new()
         {
             [ClientLanguage.English] = "The Azure Puzzle",
@@ -72,6 +79,13 @@ public sealed class DutyBannerService : IDisposable
             [ClientLanguage.German] = "Ultimative Prüfung der Vollendung",
             [ClientLanguage.French] = "L'épreuve ultime de la perfection",
             [ClientLanguage.Japanese] = "「完璧たる究極の試練」",
+        },
+        [29] = new()
+        {
+            [ClientLanguage.English] = "Remnants of the Blade",
+            [ClientLanguage.German] = "Die Überreste der Klinge",
+            [ClientLanguage.French] = "Les vestiges de la lame",
+            [ClientLanguage.Japanese] = "「女王の遺刃」",
         },
         [30] = new()
         {
@@ -93,6 +107,13 @@ public sealed class DutyBannerService : IDisposable
             [ClientLanguage.German] = "Eine chaotische Prüfung der Einheit",
             [ClientLanguage.French] = "L'épreuve chaotique de l'unité",
             [ClientLanguage.Japanese] = "「混沌たる結束の試練」",
+        },
+        [38] = new()
+        {
+            [ClientLanguage.English] = "Shadows of the Crescent",
+            [ClientLanguage.German] = "Schatten der Mondsichel",
+            [ClientLanguage.French] = "Les ombres du croissant",
+            [ClientLanguage.Japanese] = "「三日月の影」",
         },
     };
 
