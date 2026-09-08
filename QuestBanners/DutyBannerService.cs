@@ -115,6 +115,13 @@ public sealed class DutyBannerService : IDisposable
             [ClientLanguage.French] = "Les ombres du croissant",
             [ClientLanguage.Japanese] = "「三日月の影」",
         },
+        [40] = new()
+        {
+            [ClientLanguage.English] = "The Beast's Gambit",
+            [ClientLanguage.German] = "Das Gambit der Bestie",
+            [ClientLanguage.French] = "Le gambit bestial",
+            [ClientLanguage.Japanese] = "「魔獣の布石」",
+        },
     };
 
     public event Action<string, string>? DutyBannerRequested;
